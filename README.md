@@ -1,4 +1,4 @@
-# PWSH-IP-Activity-Dashboard
+# PWSH-SimpleNetworkMonitorHTML
 **This simple HTTP dashboard can ping servers, pc's and other network devices upon web request using a web browser, and show their current status**
 
 ## Requirements
