@@ -1,12 +1,20 @@
 
 
+# Check if db is created
+if (test-path -Path ".\monitor.db3") {
+    "DB Found"
+} 
+else 
+{
+    "DB not found. Creating db..."
+
 # This will create a sqldb
 $sqlite3 = 'sqlite3.exe'
 $databaseName = '.\monitor.db3'
 
 # Create a db
-Invoke-Expression -Command "$sqlite3 $databaseName"
-Invoke-Expression -Command ".quit"
+Invoke-Expression -Command "$sqlite3 $databaseName '.databases'" 
+# Invoke-Expression -Command ".exit"
 
 # Create table for CheckIns
 $query = @"
@@ -15,7 +23,7 @@ $query = @"
 	"LastCheckIn_Stamp"	TEXT,
 	"Status"	TEXT,
 	"Notes"	TEXT
-, "CheckIn_Interval"	INTEGER)
+, "CheckIn_Interval"	INTEGER
 );'
 "@
 
@@ -31,41 +39,24 @@ $query = @"
 );'
 "@
 
-# Grab table named servers
-sqlite3.exe .\monitor.db3 -header "Select * from Servers" | ConvertFrom-Csv -Delimiter "|"
-# Grab table named CheckIns
-sqlite3.exe .\monitor.db3 -header "Select * from CheckIns" | ConvertFrom-Csv -Delimiter "|"
+Invoke-Expression -Command "$sqlite3 $databaseName $query"
+
+# PUT in test data
+$query = @"
+INSERT INTO Servers
+VALUES ('N230N', '13. december 2022 20:36:20', 'UP', '');
+"@
+
+Invoke-Expression -Command @"
+$sqlite3 $databaseName "$query"
+"@
 
 # List tables
-sqlite3.exe .\monitor.db3 .tables
+Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 .tables'
 
-<#
-CREATE TABLE "Servers" (
-	"Server_Name"	TEXT,
-	"LastCheckIn_Stamp"	TEXT,
-	"Status"	TEXT,
-	"Notes"	TEXT
-);
+# Grab table named servers
+Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 -header "Select * from Servers" | ConvertFrom-Csv -Delimiter "|"'
+# Grab table named CheckIns
+Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 -header "Select * from CheckIns" | ConvertFrom-Csv -Delimiter "|"'
 
-CREATE TABLE "CheckIns" (
-	"CheckIn_Name"	TEXT,
-	"LastCheckIn_Stamp"	TEXT,
-	"Status"	TEXT,
-	"Notes"	TEXT
-, "CheckIn_Interval"	INTEGER)
-);
-#>
-<#
-$query = @"
-"CREATE TABLE "checkins" (
-	"checkin_name" VARCHAR(255) NULL,
-	"lastcheckin_stamp" VARCHAR(255) NULL,
-	"Status" VARCHAR(255) NULL
-)
-;
-"@
-#>
-
-#$query = @"
-#"CREATE TABLE "checkins" ("checkin_name" VARCHAR(255) NULL,"lastcheckin_stamp" VARCHAR(255) NULL,"Status" VARCHAR(255) NULL);
-#"@
+}
