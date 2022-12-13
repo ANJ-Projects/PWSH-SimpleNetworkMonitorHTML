@@ -1,5 +1,6 @@
 # Implementing PWSH SNM v2
-*Better editing, check in pings, dedicated database and other features*
+*Better editing, check in pings, dedicated database and other features*  
+View [changes](#changes)
 
 ## Given a new name (TBA)
 Another simpler name will be used
@@ -28,3 +29,11 @@ Invoke-Webrequest -Uri "localhost:8082/checkin-CHECKINNAME"
 Explaning the check in method
 
 *This will update the row with a new timestamp, a "checker" schedule will check the "minutes to mark as down" with the timestamp since last request and mark the point as down if it has not checked in within the timeframe set*
+
+
+# Changes
+13. december 2022 21:00:11  
+- New Create-Sqlite3db script made
+   - DB soon ready for changes to edit-servers
+
+   
