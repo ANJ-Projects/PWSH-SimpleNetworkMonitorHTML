@@ -44,7 +44,7 @@ Invoke-Expression -Command "$sqlite3 $databaseName $query"
 # PUT in test data
 $query = @"
 INSERT INTO Servers
-VALUES ('N230N', '13. december 2022 20:36:20', 'UP', '');
+VALUES ('N230', '13. december 2022 20:36:20', 'UP', '');
 "@
 
 Invoke-Expression -Command @"
