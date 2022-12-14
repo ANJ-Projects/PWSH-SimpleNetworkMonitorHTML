@@ -35,5 +35,7 @@ Explaning the check in method
 13. december 2022 21:00:11  
 - New Create-Sqlite3db script made
    - DB soon ready for changes to edit-servers
-
+14. december 2022 15:05:38
+- Add-EditHTML has been changed to use sqlite and new html tables have been made
+   - In the table there is now a link for editing the Server
    

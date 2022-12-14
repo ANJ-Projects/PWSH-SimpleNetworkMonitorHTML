@@ -157,6 +157,9 @@ $content = @"
   <tr>
     <th>IP</th>
     <th>Name</th>
+    <th>Status</th>
+    <th>Notes</th>
+    <th>Edit</th>
   </tr>
 "@
 
@@ -175,23 +178,29 @@ $htmltable = @"
 </html>
 "@
 
+# Create HTML
 New-Item -Path ".\edit.html" -ItemType File -Value $form -Force
 Add-Content -Path ".\edit.html" -Value $content -Force
 
-If (Test-Path -Path ".\servers.txt") {
-$serverlist = Get-content ".\servers.txt" | ConvertFrom-Csv -Delimiter ','
-}
-Else
-{ 
-Write-Host 'Server text file named servers.txt not found. Creating file... -f Red'
-New-Item -ItemType File -Path ".\servers.txt" -Value "ip,name`r`n"
-}
+# Get data from table Servers
+$serverlist = Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 -header "Select * from Servers" | ConvertFrom-Csv -Delimiter "|"'
 
+# Create Edit link
+# $editLink = "http:192.168.86.6:8083/edit-"
 
+# Create HTML Tables
 foreach ($server in $serverlist){
     Add-Content -Value "  <tr>" -LiteralPath .\edit.html -Force
-    Add-Content -Value "<td>$($server.ip)</td>" -LiteralPath .\edit.html -Force
-    Add-Content -Value "<td>$($server.name)</td>" -LiteralPath .\edit.html -Force
+    Add-Content -Value "<td>$($server.'Server_Name')</td>" -LiteralPath .\edit.html -Force
+    Add-Content -Value "<td>$($server.'Server_Name')</td>" -LiteralPath .\edit.html -Force
+    Add-Content -Value "<td>$($server.'Status')</td>" -LiteralPath .\edit.html -Force
+    Add-Content -Value "<td>$($server.'Notes')</td>" -LiteralPath .\edit.html -Force
+    #$editLink = "http:192.168.86.6:8083/edit-$($server.'Server_Name')"
+    $editLink = @"
+<a href="/edit-$($server.'Server_Name')">Edit</a>
+"@
+
+Add-Content -Value "<td>$editLink</td>" -LiteralPath .\edit.html -Force
     Add-Content -Value "  </tr>" -LiteralPath .\edit.html -Force    
 }
 
