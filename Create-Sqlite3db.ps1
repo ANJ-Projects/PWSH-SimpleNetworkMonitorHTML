@@ -32,19 +32,41 @@ Invoke-Expression -Command "$sqlite3 $databaseName $query"
 # Create table for Servers
 $query = @"
 'CREATE TABLE "Servers" (
+	"ServerID"	INTEGER,
+	"Server_Name"	TEXT,
+	"Notes"	TEXT,
+	"Status"	TEXT,
+	"LastCheckIn_Stamp"	TEXT,
+	PRIMARY KEY("ServerID")
+);'
+"@ 
+
+# Changes made, use this if erros
+<# $query = @"
+'CREATE TABLE "Servers" (
 	"Server_Name"	TEXT,
 	"LastCheckIn_Stamp"	TEXT,
 	"Status"	TEXT,
 	"Notes"	TEXT
 );'
-"@
+"@ #>
 
 Invoke-Expression -Command "$sqlite3 $databaseName $query"
 
 # PUT in test data
 $query = @"
-INSERT INTO Servers
-VALUES ('N230', '13. december 2022 20:36:20', 'UP', '');
+INSERT INTO Servers (Server_Name,Notes,Status,LastCheckIn_Stamp)
+VALUES ('N230', '', 'UP', '13. december 2022 20:36:20');
+"@
+
+Invoke-Expression -Command @"
+$sqlite3 $databaseName "$query"
+"@
+
+# PUT in test data
+$query = @"
+INSERT INTO Servers (Server_Name,Notes,Status,LastCheckIn_Stamp)
+VALUES ('RASP-Octan', '', 'UP', '14. december 2022 20:36:20');
 "@
 
 Invoke-Expression -Command @"
