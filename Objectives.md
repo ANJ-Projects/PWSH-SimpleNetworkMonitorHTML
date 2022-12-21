@@ -20,7 +20,7 @@ Objectives summary
 A new field will be added to the row which has an "edit" buttom, that buttom will take the user to a new site where values can be changed or updated
 
 /edit-[Servername]
-Will create a new HTML page for editing the server using Add-EditHTMLServer -Servername [Servername]
+Will create a new HTML page for editing the server using Add-EditHTMLServer -ServerID [ServerID]
 
 ### New ping check ins feature
 *Will query database, if not found request within specified minutes it will mark the ping as down*
@@ -33,6 +33,14 @@ Explaning the check in method
 
 *This will update the row with a new timestamp, a "checker" schedule will check the "minutes to mark as down" with the timestamp since last request and mark the point as down if it has not checked in within the timeframe set*
 
+# API (Webhook)
+*A list with POST will be added, showng various examles*
+
+# Optional tasks
+
+- Create a docker container for the project
+- Create a Ansible playbook for install on a fresh Ubuntu Serer
+- Documentate how to create a Windows Service and Linux Systemctl service
 
 # Changes
 13. december 2022 21:00:11  
