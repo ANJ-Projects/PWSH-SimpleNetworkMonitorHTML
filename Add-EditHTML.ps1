@@ -183,7 +183,7 @@ New-Item -Path ".\edit.html" -ItemType File -Value $form -Force
 Add-Content -Path ".\edit.html" -Value $content -Force
 
 # Get data from table Servers
-$serverlist = Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 -header "Select * from Servers" | ConvertFrom-Csv -Delimiter "|"'
+$serverlist = Invoke-Expression -Command 'sqlite3 .\monitor.db3 -header "Select * from Servers" | ConvertFrom-Csv -Delimiter "|"'
 
 # Create Edit link
 # $editLink = "http:192.168.86.6:8083/edit-"

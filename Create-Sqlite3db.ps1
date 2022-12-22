@@ -9,7 +9,7 @@ else
     "DB not found. Creating db..."
 
 # This will create a sqldb
-$sqlite3 = 'sqlite3.exe'
+$sqlite3 = 'sqlite3'
 $databaseName = '.\monitor.db3'
 
 # Create a db
@@ -74,11 +74,11 @@ $sqlite3 $databaseName "$query"
 "@
 
 # List tables
-Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 .tables'
+Invoke-Expression -Command 'sqlite3 .\monitor.db3 .tables'
 
 # Grab table named servers
-Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 -header "Select * from Servers" | ConvertFrom-Csv -Delimiter "|"'
+Invoke-Expression -Command 'sqlite3 .\monitor.db3 -header "Select * from Servers" | ConvertFrom-Csv -Delimiter "|"'
 # Grab table named CheckIns
-Invoke-Expression -Command 'sqlite3.exe .\monitor.db3 -header "Select * from CheckIns" | ConvertFrom-Csv -Delimiter "|"'
+Invoke-Expression -Command 'sqlite3 .\monitor.db3 -header "Select * from CheckIns" | ConvertFrom-Csv -Delimiter "|"'
 
 }

@@ -10,7 +10,7 @@ Function Add-EditHTMLServer {
 
 
   # Get data from table Servers
-  $FindServer = 'sqlite3.exe .\monitor.db3 -header "Select * from Servers WHERE ServerID={0}" | ConvertFrom-Csv -Delimiter "|"' -f $ServerID
+  $FindServer = 'sqlite3 .\monitor.db3 -header "Select * from Servers WHERE ServerID={0}" | ConvertFrom-Csv -Delimiter "|"' -f $ServerID
   $Server = Invoke-Expression -Command $FindServer 
   $Server
   
